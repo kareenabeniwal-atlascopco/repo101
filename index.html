@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Surprise for Leena! ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        :root {
+            --primary-pink: #ff75a0;
+            --soft-pink: #fce4ec;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--soft-pink);
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* --- LANDING PAGE --- */
+        .landing-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 1s ease;
+        }
+
+        .btn-celebrate {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 117, 160, 0.4);
+            z-index: 10;
+        }
+
+        .btn-celebrate:hover { transform: scale(1.1); }
+
+        /* --- FIXED BUTTON --- */
+        .btn-celebrate-fixed {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 117, 160, 0.4);
+            z-index: 100;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            display: none;
+        }
+
+        /* --- CONTENT & GALLERY --- */
+        #main-content { display: none; padding: 50px 20px; }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--primary-pink);
+            margin-top: 60px;
+        }
+
+        .gallery {
+            max-width: 1000px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-card {
+            background: white;
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            opacity: 0;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .personal-msg { font-size: 1.2rem; color: #666; margin-top: 10px; font-style: italic; }
+
+        .final-msg {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-pink);
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing" class="landing-page">
+        <p class="animate__animated animate__fadeInDown" style="color: #888;">It's your birthday today 😭🫶</p>
+        <button class="btn-celebrate animate__animated animate__pulse animate__infinite" onclick="startCelebration()">
+            Let's Celebrate, LEENA! 🎉
+        </button>
+    </div>
+
+    <div id="main-content">
+        <button id="fixed-next-btn" class="btn-celebrate-fixed" onclick="navigate()">
+            There's More! 🤫 ✨
+        </button>
+
+        <h1 class="animate__animated animate__zoomIn">Happy Birthday, Leena! 🎂</h1>
+        <p class="animate__animated animate__fadeIn">cheers to wonderfullness in you... ✨</p>
+
+        <div id="page1" class="gallery">
+            <div class="photo-card" id="pic1"><img src="photos/1.png"><p class="personal-msg">crazy book girl ✨</p></div>
+            <div class="photo-card" id="pic2"><img src="photos/3.png"><p class="personal-msg">Stylish Leena 🥂</p></div>
+            <div class="photo-card" id="pic3"><img src="photos/2.png"><p class="personal-msg">Dancer Leena 😊</p></div>
+        </div>
+
+        <div id="page2" class="gallery" style="display: none;">
+            <div class="photo-card" id="pic4"><img src="photos/4.png"><p class="personal-msg">Catsss and Leena 😽😼 </p></div>
+            <div class="photo-card" id="pic5"><img src="photos/5.png"><p class="personal-msg">Power Pack Leena 💪</p></div>
+            <div class="photo-card" id="pic6"><img src="photos/6.png"><p class="personal-msg">Special Appreciation for the hair 😭🤌</p></div>
+        </div>
+
+        <div id="page3" style="display: none;">
+            <div class="gallery">
+                <div class="photo-card" id="pic7"><img src="photos/8.jpeg"><p class="personal-msg">⭐</p></div>
+                <div class="photo-card" id="pic8"><img src="photos/10.jpeg"><p class="personal-msg">💎</p></div>
+            </div>
+            <h2 class="final-msg animate__animated animate__heartBeat animate__infinite"> with love, <br>from Kareena 🌞😎</h2>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        let currentPage = 1;
+
+        function triggerConfetti() {
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff75a0', '#fce4ec', '#ff4f81'] });
+                confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff75a0', '#fce4ec', '#ff4f81'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        function startCelebration() {
+            document.getElementById('landing').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff75a0', '#ffffff', '#ff4f81'] });
+            triggerConfetti();
+
+            ['pic1', 'pic2', 'pic3'].forEach((id, index) => {
+                setTimeout(() => {
+                    const el = document.getElementById(id);
+                    el.style.opacity = "1";
+                    el.classList.add('animate__animated', 'animate__backInUp');
+                }, 400 * (index + 1));
+            });
+
+            setTimeout(() => {
+                const btn = document.getElementById('fixed-next-btn');
+                btn.style.display = 'block';
+                btn.classList.add('animate__animated', 'animate__fadeInLeft');
+            }, 2000);
+        }
+
+        function navigate() {
+            if (currentPage === 1) {
+                showPage2();
+            } else if (currentPage === 2) {
+                showFinalPage();
+            }
+        }
+
+        function showPage2() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'grid';
+            
+            document.getElementById('fixed-next-btn').innerText = "Final Surprise! ✨";
+            
+            confetti({ particleCount: 100, spread: 160, colors: ['#ff75a0', '#ffffff'] });
+
+            ['pic4', 'pic5', 'pic6'].forEach((id) => {
+                const el = document.getElementById(id);
+                el.style.opacity = "1";
+                el.classList.add('animate__animated', 'animate__zoomIn');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            currentPage = 2;
+        }
+
+        function showFinalPage() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'block';
+            document.getElementById('fixed-next-btn').style.display = 'none';
+            
+            // Grand Finale Confetti
+            var end = Date.now() + (5 * 1000);
+            var colors = ['#ff75a0', '#ffffff'];
+
+            (function frame() {
+              confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+              confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+
+            ['pic7', 'pic8'].forEach((id) => {
+                const el = document.getElementById(id);
+                el.style.opacity = "1";
+                el.classList.add('animate__animated', 'animate__fadeInUp');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
